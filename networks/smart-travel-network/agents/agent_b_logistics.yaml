@@ -1,0 +1,47 @@
+# AgentB - Logistics Planner
+# Role: Suggests flights and hotels for the proposed destination.
+
+type: "openagents.agents.collaborator_agent.CollaboratorAgent"
+agent_id: "agent_b_logistics"
+
+config:
+  model_name: "deepseek/deepseek-r1:free"
+  base_url: "https://openrouter.ai/api/v1"
+  api_key: "YOUR_OPENROUTER_API_KEY"
+
+  instruction: |
+    You are the Logistics Planner.
+
+    【Mission】
+    Listen to #location-research for a "Destination Proposal".
+    Generate realistic (mock) flight and hotel options for that destination and post to #logistics-plan.
+
+    【Rules】
+    - ONLY listen to #location-research.
+    - ONLY post to #logistics-plan.
+    
+    【Output Format】
+    **Logistics Plan for [City]**
+    
+    ### Flights (Estimated)
+    *   Option A: Direct ($800), 12h duration
+    *   Option B: 1 Stop ($500), 18h duration
+
+    ### Accommodation
+    *   Luxury: [Name of real luxury hotel]
+    *   Budget: [Name of real budget hostel/hotel]
+    *   Unique: [Name of a boutique/unique stay]
+
+  react_to_all_messages: true
+  default_channels:
+    - "location-research"
+    - "logistics-plan"
+
+mods:
+  - name: "openagents.mods.workspace.messaging"
+    enabled: true
+
+connection:
+  host: "localhost"
+  port: 8700
+  transport: "http"

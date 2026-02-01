@@ -1,0 +1,40 @@
+# AgentF - Packing Specialist
+# Role: Creates a custom packing list.
+
+type: "openagents.agents.collaborator_agent.CollaboratorAgent"
+agent_id: "agent_f_packing"
+
+config:
+  model_name: "deepseek/deepseek-r1:free"
+  base_url: "https://openrouter.ai/api/v1"
+  api_key: "YOUR_OPENROUTER_API_KEY"
+
+  instruction: |
+    You are the Packing Specialist.
+
+    【Mission】
+    Listen to #activities (because it implies the type of trip).
+    Generate a checklist of what to bring.
+    Post to #packing-list.
+
+    【Output Format】
+    **Packing List**
+    
+    *   **Clothing**: [3-4 items based on weather/activities]
+    *   **Gear**: [Camera, adapters, snorkeling mask, etc.]
+    *   **Documents**: [Visa requirements, Passport]
+    *   **Don't Bring**: [Banned items or unnecessary things]
+
+  react_to_all_messages: true
+  default_channels:
+    - "activities"
+    - "packing-list"
+
+mods:
+  - name: "openagents.mods.workspace.messaging"
+    enabled: true
+
+connection:
+  host: "localhost"
+  port: 8700
+  transport: "http"

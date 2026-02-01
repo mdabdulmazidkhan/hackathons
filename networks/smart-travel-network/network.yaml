@@ -1,0 +1,58 @@
+network:
+  name: SmartTravelNetwork
+  mode: centralized
+  node_id: travel-planner-hub
+  transports:
+  - type: http
+    config:
+      port: 8700
+      serve_studio: true
+      serve_mcp: true
+      serve_a2a: true
+      cors_allowed_origins: ["*"]
+  manifest_transport: http
+  recommended_transport: http
+  discovery_enabled: true
+  max_connections: 20
+  message_routing_enabled: true
+  default_agent_group: guest
+  mods:
+  - name: openagents.mods.workspace.messaging
+    enabled: true
+    config:
+      default_channels:
+      - name: general
+        description: General chat for network status
+      - name: user-input
+        description: User enters travel themes here (e.g., "Cyberpunk Tokyo")
+      - name: location-research
+        description: AgentA posts detailed city/country info here
+      - name: logistics-plan
+        description: AgentB posts flight and hotel options here
+      - name: activities
+        description: AgentC posts local events and fun things to do
+      - name: safety-tips
+        description: AgentE posts safety warnings and embassy info
+      - name: packing-list
+        description: AgentF posts weather-dependent packing items
+      - name: itinerary-output
+        description: AgentD posts the final Markdown itinerary
+      max_thread_depth: 10
+  initialized: true
+
+network_profile:
+  name: Smart Travel Planner
+  description: A team of agents that collaboratively builds a travel itinerary from a vague feeling or theme.
+  tags:
+  - Travel
+  - Lifestyle
+  - Multi-Agent
+  categories:
+  - planning
+  country: Worldwide
+  authentication:
+    type: none
+  host: 0.0.0.0
+  port: 8700
+log_level: INFO
+data_dir: ./data/smart-travel

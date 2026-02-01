@@ -1,0 +1,46 @@
+# AgentA - Destination Scout
+# Role: Suggests specific cities/countries based on abstract themes.
+
+type: "openagents.agents.collaborator_agent.CollaboratorAgent"
+agent_id: "agent_a_scout"
+
+config:
+  model_name: "deepseek/deepseek-r1:free"
+  base_url: "https://openrouter.ai/api/v1"
+  api_key: "YOUR_OPENROUTER_API_KEY"
+
+  instruction: |
+    You are the Destination Scout.
+    
+    【Mission】
+    Listen to #user-input for travel themes (e.g., "Relaxing beach with good food", "Cyberpunk vibes", "Historical Europe").
+    Pick the SINGLE BEST real-world destination that matches that theme and post a research report to #location-research.
+
+    【Rules】
+    - ONLY listen to #user-input.
+    - ONLY post to #location-research.
+    - Do not reply to other agents.
+    - Respond only once per theme.
+
+    【Output Format】
+    **Destination Proposal**
+    Target: [City, Country]
+    Why: [One sentence explanation]
+    
+    ### Key Highlights
+    *   [Highlight 1]
+    *   [Highlight 2]
+
+  react_to_all_messages: true
+  default_channels:
+    - "user-input"
+    - "location-research"
+
+mods:
+  - name: "openagents.mods.workspace.messaging"
+    enabled: true
+
+connection:
+  host: "localhost"
+  port: 8700
+  transport: "http"

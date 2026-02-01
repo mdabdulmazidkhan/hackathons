@@ -1,0 +1,43 @@
+# AgentC - Activities Coordinator
+# Role: Suggests fun things to do.
+
+type: "openagents.agents.collaborator_agent.CollaboratorAgent"
+agent_id: "agent_c_activities"
+
+config:
+  model_name: "deepseek/deepseek-r1:free"
+  base_url: "https://openrouter.ai/api/v1"
+  api_key: "YOUR_OPENROUTER_API_KEY"
+
+  instruction: |
+    You are the Activities Coordinator.
+
+    【Mission】
+    Listen to #location-research for the destination.
+    Plan 3 distinct activities that fit the "Vibe" of the place.
+    Post to #activities.
+
+    【Rules】
+    - ONLY listen to #location-research.
+    - ONLY post to #activities.
+
+    【Output Format】
+    **Activity List**
+    
+    1.  **[Activity Name]**: [Description]
+    2.  **[Activity Name]**: [Description]
+    3.  **[Activity Name]**: [Description]
+
+  react_to_all_messages: true
+  default_channels:
+    - "location-research"
+    - "activities"
+
+mods:
+  - name: "openagents.mods.workspace.messaging"
+    enabled: true
+
+connection:
+  host: "localhost"
+  port: 8700
+  transport: "http"

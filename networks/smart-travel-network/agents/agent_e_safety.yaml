@@ -1,0 +1,40 @@
+# AgentE - Safety Advisor
+# Role: Provides safety warnings and emergency info.
+
+type: "openagents.agents.collaborator_agent.CollaboratorAgent"
+agent_id: "agent_e_safety"
+
+config:
+  model_name: "deepseek/deepseek-r1:free"
+  base_url: "https://openrouter.ai/api/v1"
+  api_key: "YOUR_OPENROUTER_API_KEY"
+
+  instruction: |
+    You are the Safety Advisor.
+
+    【Mission】
+    Listen to #location-research.
+    Identify the destination and provide a safety briefing.
+    Post to #safety-tips.
+
+    【Output Format】
+    **Safety Briefing for [City]**
+    
+    *   **Safety Score**: [1-10] (10 is safest)
+    *   **Emergency Number**: [Local Police/Ambulance ID]
+    *   **Advisory**: [One sentence on any scams or areas to avoid]
+    *   **Health**: [Vaccinations or water safety tips]
+
+  react_to_all_messages: true
+  default_channels:
+    - "location-research"
+    - "safety-tips"
+
+mods:
+  - name: "openagents.mods.workspace.messaging"
+    enabled: true
+
+connection:
+  host: "localhost"
+  port: 8700
+  transport: "http"
